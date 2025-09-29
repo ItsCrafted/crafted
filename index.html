@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hi, Im Crafted</title>
+  <link rel="shortcut icon" href="pfp.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --accent: #00ffe5;
+      --accent-2: #4bf9ed;
+      --accent-3: #96f3f5;
+      --panel: rgba(15, 23, 42, 0.7);
+      --deep: rgba(8, 26, 46, 0.95);
+      --glass: rgba(255, 255, 255, 0.03);
+      --radius: 12px;
+      --ff: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--ff);
+      color: #e2e8f0;
+      background: #000;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #bgIframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 229, 0.4);
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .navlink {
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .navlink:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .navlink.active {
+      color: var(--accent);
+      background: rgba(0, 255, 229, 0.1);
+    }
+
+    .page {
+      display: none;
+      min-height: 70vh;
+      animation: pageSlide 0.4s ease;
+    }
+
+    @keyframes pageSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page.active {
+      display: block;
+    }
+    
+    .hero {
+      padding: 6rem 0 4rem;
+      max-width: 800px;
+    }
+
+    .hero h2 {
+      font-size: 3.5rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .typing-text {
+      color: var(--accent);
+    }
+
+    .cursor {
+      color: var(--accent);
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .hero .lead {
+      font-size: 1.25rem;
+      color: #94a3b8;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      padding: 0.5rem 1rem;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      color: var(--accent-3);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 229, 0.2);
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 255, 229, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: rgba(0, 255, 229, 0.05);
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .section-desc {
+      color: #94a3b8;
+      font-size: 1.05rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(0, 255, 229, 0.3);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius) var(--radius) 0 0;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .card h3 {
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .youtube-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .youtube-card {
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .youtube-card:hover {
+      border-color: rgba(255, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .youtube-icon {
+      width: 80px;
+      height: 80px;
+      background: #ff0000;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.5rem;
+      color: #fff;
+    }
+
+    .youtube-card h3 {
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .youtube-handle {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .youtube-card p {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .youtube-link {
+      display: inline-block;
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      background: #ff0000;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .youtube-link:hover {
+      background: #cc0000;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+    }
+
+    .contact-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(0, 255, 229, 0.3);
+      transform: translateX(4px);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 229, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact-info h3 {
+      color: #fff;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .contact-info p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    .contact-link {
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--accent-2);
+    }
+
+    footer {
+      padding: 3rem 0 2rem;
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 5rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+
+      .hero .lead {
+        font-size: 1.1rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-links {
+        flex-direction: column;
+      }
+
+      .btn {
+        text-align: center;
+        justify-content: center;
+      }
+    }
+    .card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+  <iframe id="bgIframe" src="bg.html"></iframe>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <img src="pfp.png" alt="Crafted" class="profile-img">
+        <h1>Crafted</h1>
+      </div>
+      <nav>
+        <a class="navlink active" data-page="home">Home</a>
+        <a class="navlink" data-page="projects">Projects</a>
+        <a class="navlink" data-page="youtube">YouTube</a>
+        <a class="navlink" data-page="contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="page active" id="home">
+      <section class="hero">
+        <h2>Hi, I'm Crafted, And I <span class="typing-text"></span><span class="cursor">|</span></h2>
+        
+        <div class="skill-tags">
+          <span class="tag">Web Development</span>
+          <span class="tag">Game Design</span>
+          <span class="tag">HTML/CSS/JS</span>
+          <span class="tag">Hacking</span>
+          <span class="tag">Minecraft</span>
+        </div>
+
+        <div class="quick-links">
+          <a href="#" class="btn btn-primary" data-page="projects">
+            <i class="fas fa-code"></i> View Projects
+          </a>
+          <a href="#" class="btn btn-secondary" data-page="contact">
+            <i class="fas fa-envelope"></i> Get in Touch
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <div class="page" id="projects">
+  <div class="section-header">
+    <h2 class="section-title">Projects</h2>
+    <p class="section-desc">Collection of my work and creations</p>
+  </div>
+  <div class="projects-grid">
+    <a href="https://craftedgamz.com" target="_blank" class="card-link">
+      <div class="card">
+        <img src="https://cgamz.site/embed.png" alt="Crafted Gamz" class="card-img">
+        <div class="card-content">
+          <h3>Crafted Gamz</h3>
+          <p>My masterpiece, a three year old project. A hub for school, with almost 500 games, a proxy, AI, and more.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://craftedgamz.com/search" target="_blank" class="card-link">
+      <div class="card">
+        <img src="cgpup.png" alt="CGPUP" class="card-img">
+        <div class="card-content">
+          <h3>CGPUP<br>(Crafted Gamz Private Unblocked Proxy)</h3>
+          <p>My proxy featured in Crafted Gamz, powered by Titanium Network's Ultraviolet, unlocks every website on any device.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://lore.pvplegacy.online" target="_blank" class="card-link">
+      <div class="card">
+        <img src="lore_hub.png" alt="Lore Hub" class="card-img">
+        <div class="card-content">
+          <h3>Lore Hub</h3>
+          <p>A centralized informational website to document the lore of PVP Legacy.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://github.com/itscrafted/eclipse" target="_blank" class="card-link">
+      <div class="card">
+        <img src="eclipse.png" alt="Eclipse" class="card-img">
+        <div class="card-content">
+          <h3>Eclipse</h3>
+          <p>A newer project for remotely launching games from your URL bar.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://github.com/itscrafted/vexis" target="_blank" class="card-link">
+      <div class="card">
+        <img src="vexis.png" alt="Vexis" class="card-img">
+        <div class="card-content">
+          <h3>Vexis</h3>
+          <p>A newer project that stores code in images (png files) and launches them in a simple UI.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://github.com/itscrafted/fractal" target="_blank" class="card-link">
+      <div class="card">
+        <img src="fractal.png" alt="Fractal" class="card-img">
+        <div class="card-content">
+          <h3>Fractal</h3>
+          <p>A newer project that bypasses tab restrictions on browsers.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://discord.gg/invite/ut9zDy7w" target="_blank" class="card-link">
+      <div class="card">
+        <img src="legacy_lore.png" alt="Legacy Lore" class="card-img">
+        <div class="card-content">
+          <h3>Legacy Lore</h3>
+          <p>A Discord server dedicated to the lore of PVP Legacy.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+    <div class="page" id="youtube">
+      <div class="youtube-container">
+        <div class="section-header">
+          <h2 class="section-title">YouTube</h2>
+          <p class="section-desc">Follow my content creation journey</p>
+        </div>
+        <div class="youtube-card">
+          <div class="youtube-icon">
+            <i class="fab fa-youtube"></i>
+          </div>
+          <h3>My YouTube Channel</h3>
+          <p class="youtube-handle">@its_crafted</p>
+          <p>Did you know that the Minecraft server PVP Lgeacy is holding the greatest secret in Minecraft? Find out more on my channel!</p>
+          <a href="https://youtube.com/@its_crafted" target="_blank" class="youtube-link">
+            <i class="fab fa-youtube"></i> Visit Channel
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="contact">
+      <div class="contact-container">
+        <div class="section-header">
+          <h2 class="section-title">Contact</h2>
+          <p class="section-desc">Let's connect and collaborate</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fab fa-discord"></i>
+          </div>
+          <div class="contact-info">
+            <h3>Discord</h3>
+            <p><span class="contact-link">its_crafted</span></p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="contact-info">
+            <h3>Email</h3>
+            <p><a href="mailto:crafted@craftedgamz.com" class="contact-link">crafted@craftedgamz.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>© 2025 Crafted. All rights reserved.</div>
+    </footer>
+  </div>
+
+  <script>
+
+    const phrases = [
+      "Code Dreams Into Reality",
+      "Own Crafted Gamz",
+      "Despise Vplaza",
+      "Live In The United States",
+      "Love Minecraft",
+      "Hate Lore Sweats",
+      "Am In High School",
+      "Used AI To Make This",
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+
+    function typeEffect() {
+      const typingElement = document.querySelector('.typing-text');
+      const currentPhrase = phrases[phraseIndex];
+
+      if (isDeleting) {
+        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+      } else {
+        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 100;
+      }
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        typingSpeed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 500;
+      }
+
+      setTimeout(typeEffect, typingSpeed);
+    }
+
+    typeEffect();
+    document.querySelectorAll('.navlink').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = link.dataset.page;
+        document.querySelectorAll('.navlink').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.quick-links .btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = btn.dataset.page;
+        document.querySelectorAll('.navlink').forEach(l => l.classList.remove('active'));
+        document.querySelector(`[data-page="${page}"]`).classList.add('active');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
